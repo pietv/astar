@@ -108,7 +108,7 @@ func (m Maze) Successors() []interface{} {
 
 	checkLocation := func(i, j int) {
 		// The matrix is not necessarily rectangular.
-		if i >= len(m.maze) || j >= len(m.maze[i]) {
+		if i < 0 || j < 0 || i >= len(m.maze) || j >= len(m.maze[i]) {
 			return
 		}
 
