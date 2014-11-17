@@ -1,18 +1,13 @@
 // Package astar implements the A* (“A star”) search algorithm as described in
 // the paper by Peter E. Hart et al, “A Formal Basis for the Heuristic Determination
 // of Minimum Cost Paths” http://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf
-// the “Search Algorithm A*”.
 //
-// Terminology presented in the paper is not retained. The “open” and “closed”
-// sets are named “priority queue” and “explored” set respectively.
+// The “open” and “closed” sets in this implementation are named “priority queue”
+// and “explored” set respectively.
 //
-// This algorithm is also known as informed best-first search algorithm which is itself
-// a variant of uniform cost search (UCS), where the minimum total Cost()
-// is taken into account as well as a heuristic Estimate() to the goal.
+// Time complexity of this algorithm depends on the quality of heuristic function Estimate().
 //
-// Time complexity depends on the quality of heuristic function, here: Estimate().
-//
-// If Estimate() is constant, the complexity is the same as for the uniform cost search
+// If Estimate() is constant, the complexity is the same as for the uniformß cost search (UCS)
 // algorithm – O(b^m), where b is the branching factor (how many Successors() on average)
 // and m is the maximum depth.
 //
