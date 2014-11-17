@@ -107,6 +107,11 @@ func (m Maze) Successors() []interface{} {
 	successors := []interface{}{}
 
 	checkLocation := func(i, j int) {
+		// The matrix is not necessarily rectangular.
+		if i >= len(m.maze) || j >= len(m.maze[i]) {
+			return
+		}
+
 		switch m.maze[i][j] {
 		case SpaceRune, FinishRune:
 			successors = append(successors, Location{i, j})
@@ -115,21 +120,14 @@ func (m Maze) Successors() []interface{} {
 
 	i, j := m.curr.i, m.curr.j
 
-	if i > 0 {
-		checkLocation(i-1, j)
-	}
-
-	if i < len(m.maze)-1 {
-		checkLocation(i+1, j)
-	}
-
-	if j > 0 {
-		checkLocation(i, j-1)
-	}
-
-	if j < len(m.maze[i])-1 {
-		checkLocation(i, j+1)
-	}
+	// North.
+	checkLocation(i-1, j)
+	// South.
+	checkLocation(i+1, j)
+	// West.
+	checkLocation(i, j-1)
+	// East.
+	checkLocation(i, j+1)
 
 	return successors
 }
