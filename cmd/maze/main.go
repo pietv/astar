@@ -29,11 +29,12 @@ var (
 	demoFlag      = flag.Int("demo", 0, "run demo #")
 	randomFlag    = flag.Bool("random", false, "generate a random maze")
 	sizeFlag      = flag.String("size", defaultSize, "generate a random maze of size NxM")
-	helpFlag      = flag.Bool("help", false, "show help")
 )
 
-var program = filepath.Base(os.Args[0])
-var usage = `maze: demonstrate A* search algorithm traversing a maze.
+func usage() {
+	program := filepath.Base(os.Args[0])
+
+	usage := `maze: demonstrate A* search algorithm traversing a maze.
 Usage: maze [FILE] [-demo N] [-random] [-size NxM] [-help]
             [-euclid|-manhattan] [-cost MULTIPLIER] [-estimate MULTIPLIER]
 
@@ -55,6 +56,10 @@ Examples:
   ` + program + ` -size 2x40                      -- long random maze
   ` + program + ` -demo 2 -euclid -estimate 0.5   -- euclid distance with custom estimate
   ` + program + ` -random -cost 0                 -- random maze with greedy traversal`
+
+	fmt.Println(usage)
+	os.Exit(2)
+}
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -86,11 +91,8 @@ func readFile(filename string) []string {
 }
 
 func main() {
+	flag.Usage = usage
 	flag.Parse()
-	if *helpFlag {
-		fmt.Println(usage)
-		os.Exit(2)
-	}
 
 	var (
 		demo  int
