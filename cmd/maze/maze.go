@@ -193,10 +193,12 @@ func New(m []string) *Maze {
 func (m *Maze) DrawMaze(path, steps []interface{}) [][]string {
 	states := map[Location]string{}
 
+	// Apply explored states first.
 	for _, state := range steps {
 		states[state.(Location)] = StepRune
 	}
 
+	// Apply path.
 	for _, state := range path {
 		states[state.(Location)] = PathRune
 	}
@@ -205,8 +207,10 @@ func (m *Maze) DrawMaze(path, steps []interface{}) [][]string {
 	for i := 0; i < len(m.maze); i++ {
 		maze[i] = make([]string, len(m.maze[i]))
 		for j := 0; j < len(maze[i]); j++ {
-			if state, ok := states[Location{i, j}]; ok && m.maze[i][j] == SpaceRune {
-				maze[i][j] = fmt.Sprint(state)
+			state, ok := states[Location{i, j}]
+
+			if ok && m.maze[i][j] == SpaceRune {
+				maze[i][j] = state
 			} else {
 				maze[i][j] = m.maze[i][j]
 			}
