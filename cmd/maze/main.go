@@ -33,7 +33,6 @@ var (
 
 func usage() {
 	program := filepath.Base(os.Args[0])
-
 	usage := `maze: demonstrate A* search algorithm traversing a maze.
 Usage: maze [FILE] [-demo N] [-random] [-size NxM] [-help]
             [-euclid|-manhattan] [-cost MULTIPLIER] [-estimate MULTIPLIER]
@@ -53,9 +52,9 @@ Flags:
   -help                   show this help.
 
 Examples:
-  ` + program + ` -size 2x40                      -- long random maze
-  ` + program + ` -demo 2 -euclid -estimate 0.5   -- euclid distance with custom estimate
-  ` + program + ` -random -cost 0                 -- random maze with greedy traversal`
+  ` + program + ` -size 2x40                      - long random maze
+  ` + program + ` -demo 2 -euclid -estimate 0.5   - euclid distance with custom estimate
+  ` + program + ` -random -cost 0                 - random maze with greedy traversal`
 
 	fmt.Println(usage)
 	os.Exit(2)
@@ -111,7 +110,7 @@ func main() {
 	} else {
 		demo = *demoFlag - 1
 		if demo >= len(demos) {
-			fmt.Fprintf(os.Stderr, "Available demos are from #1 upto #%d.\n", len(demos))
+			fmt.Fprintf(os.Stderr, "Available demos are from #1 up to #%d.\n", len(demos))
 			os.Exit(1)
 		}
 	}

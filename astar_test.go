@@ -241,9 +241,9 @@ var EstimateTests = []struct {
 	},
 }
 
-func stringize(out []interface{}) (s string) {
-	for _, step := range out {
-		s += step.(string)
+func stringize(in []interface{}) (out string) {
+	for _, step := range in {
+		out += step.(string)
 	}
 	return
 }
