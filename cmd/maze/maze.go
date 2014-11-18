@@ -73,7 +73,7 @@ func genManhattanEstimate(multiplier float64) func(interface{}, interface{}) flo
 			aJ = float64(neighbor.(Location).j)
 			bJ = float64(finish.(Location).j)
 		)
-		return math.Abs(aI-bI) + math.Abs(aJ-bJ)*multiplier
+		return (math.Abs(aI-bI) + math.Abs(aJ-bJ)) * multiplier
 	}
 }
 
@@ -207,7 +207,7 @@ func (m *Maze) DrawMaze(path, steps []interface{}) [][]string {
 		maze[i] = make([]string, len(m.maze[i]))
 		for j := 0; j < len(maze[i]); j++ {
 			state, ok := states[Location{i, j}]
-                        if ok && m.maze[i][j] == SpaceRune {
+			if ok && m.maze[i][j] == SpaceRune {
 				maze[i][j] = state
 			} else {
 				maze[i][j] = m.maze[i][j]
