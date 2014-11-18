@@ -3,13 +3,13 @@
 // of Minimum Cost Paths” http://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf
 //
 // The “open” and “closed” sets in this implementation are named “priority queue”
-// and “explored” set respectively.
+// and “explored” respectively.
 //
-// Time complexity of this algorithm depends on the quality of heuristic function Estimate().
+// Time complexity of the algorithm depends on the quality of heuristic function Estimate().
 //
 // If Estimate() is constant, the complexity is the same as for the uniform cost search (UCS)
 // algorithm – O(b^m), where b is the branching factor (how many Successors() on average)
-// and m is the maximum depth.
+// and m is the maximum depth of the decision tree.
 //
 // If Estimate() is optimal, the complexity is O(n).
 //
@@ -88,7 +88,7 @@ type Interface interface {
 }
 
 type state struct {
-	id             interface{}
+	state          interface{}
 	cost, estimate float64
 	index          int
 }
@@ -128,8 +128,8 @@ func (pq *states) Pop() interface{} {
 func Search(p Interface) ([]interface{}, []interface{}, error) {
 	// Priority queue of states on the frontier.
 	// Initialized with the start state.
-	q := states{{id: p.Start(), estimate: p.Estimate(p.Start())}}
-	heap.Init(&q)
+	pq := states{{state: p.Start(), estimate: p.Estimate(p.Start())}}
+	heap.Init(&pq)
 
 	// States currently on the frontier.
 	queuedLinks := map[interface{}]*state{}
@@ -147,30 +147,30 @@ func Search(p Interface) ([]interface{}, []interface{}, error) {
 	p.Move(p.Start())
 
 	// Exhaust all successor states.
-	for !q.Empty() {
+	for !pq.Empty() {
 		// Pick a state with a minimum Cost() + Estimate() value.
-		current := heap.Pop(&q).(*state)
-		delete(queuedLinks, current.id)
-		explored[current.id] = true
+		current := heap.Pop(&pq).(*state)
+		delete(queuedLinks, current.state)
+		explored[current.state] = true
 
 		// Move to the new state.
-		p.Move(current.id)
+		p.Move(current.state)
 
-		steps = append(steps, current.id)
+		steps = append(steps, current.state)
 
 		// If the state is final, terminate.
 		if p.Finish() {
 			// Reconstruct the path from finish to start.
 			return func() []interface{} {
-				path := []interface{}{current.id}
+				path := []interface{}{current.state}
 				for {
-					if _, ok := transitions[current.id]; !ok {
+					if _, ok := transitions[current.state]; !ok {
 						break
 					}
-					current.id = transitions[current.id]
+					current.state = transitions[current.state]
 
 					// Reverse.
-					path = append([]interface{}{current.id}, path...)
+					path = append([]interface{}{current.state}, path...)
 
 				}
 				return path
@@ -192,18 +192,18 @@ func Search(p Interface) ([]interface{}, []interface{}, error) {
 				// update its path cost.
 				if cost < queuedState.cost {
 					queuedState.cost = cost
-					heap.Fix(&q, queuedState.index)
-					transitions[succ] = current.id
+					heap.Fix(&pq, queuedState.index)
+					transitions[succ] = current.state
 				}
 			} else {
 				state := state{
-					id:       succ,
+					state:    succ,
 					cost:     cost,
 					estimate: p.Estimate(succ),
 				}
-				heap.Push(&q, &state)
+				heap.Push(&pq, &state)
 				queuedLinks[succ] = &state
-				transitions[succ] = current.id
+				transitions[succ] = current.state
 			}
 		}
 	}

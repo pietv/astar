@@ -33,9 +33,8 @@ import (
 
 // Glasses’ capacities and the goal.
 type Puzzle struct {
-	CapFirst  int
-	CapSecond int
-	Goal      int
+	CapFirst, CapSecond int
+	Goal                int
 }
 
 // Glasses state.
