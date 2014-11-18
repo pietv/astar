@@ -25,20 +25,25 @@ var (
 var TerminalTmpl = `
 {{define "Terminal"}}
  {{.Title}}
-
 {{range .Maze}}  {{range .}}{{colorize .}}{{end}}{{println}}{{end}}
- {{colorize "* - wall  S - start  ··· - explored  ••• - shortest path"}}
+ {{colorize legend}}
  Run with “-help” for available options.
 {{end}}
 
 {{define "File"}}{{.Title}}
 
-{{range .Maze}}{{range .}}{{print .}}{{end}}{{println}}{{end}}
-{{print "* - wall  S - start  ··· - explored  ••• - shortest path"}}
+{{range .Maze}}{{range .}}{{.}}{{end}}{{println}}{{end}}
+{{legend}}
 {{end}}`
 
 var (
 	helpers = map[string]interface{}{
+		"legend": func() string {
+			return WallRune + " - wall  " +
+				StartRune + " - start  " +
+				strings.Repeat(StepRune, 3) + " - explored  " +
+				strings.Repeat(PathRune, 3) + " - shortest path"
+		},
 		"colorize": func(in string) (out string) {
 			for _, s := range strings.Split(in, "") {
 				switch s {
