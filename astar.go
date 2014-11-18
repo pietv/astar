@@ -7,15 +7,13 @@
 //
 // Time complexity of this algorithm depends on the quality of heuristic function Estimate().
 //
-// If Estimate() is constant, the complexity is the same as for the uniformß cost search (UCS)
+// If Estimate() is constant, the complexity is the same as for the uniform cost search (UCS)
 // algorithm – O(b^m), where b is the branching factor (how many Successors() on average)
 // and m is the maximum depth.
 //
 // If Estimate() is optimal, the complexity is O(n).
 //
-//
-// The algorithm is implemented as a Search() function. In order to use it, you'll need
-// to implement the astar.Interface.
+// The algorithm is implemented as a Search() function which takes astar.Interface as a parameter.
 //
 //
 // Basic usage (counting to 10):

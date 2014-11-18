@@ -124,7 +124,7 @@ func main() {
 		fmt.Sscanf(*sizeFlag, "%dx%d", &n, &m)
 
 		if n == 0 || m == 0 {
-			fmt.Fprintf(os.Stderr, "You should provide the size in the form of “-size=NxM”")
+			fmt.Fprintf(os.Stderr, "You should provide positive sizes in the form of “-size=NxM”\n")
 			os.Exit(1)
 		}
 

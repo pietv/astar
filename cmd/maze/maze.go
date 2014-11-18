@@ -189,17 +189,15 @@ func New(m []string) *Maze {
 	}
 }
 
-// DrawMaze applies path and explored state lists to a maze
+// DrawMaze applies path and explored states to a maze
 // and returns it as a matrix of strings.
 func (m *Maze) DrawMaze(path, steps []interface{}) [][]string {
 	states := map[Location]string{}
 
-	// Apply explored states first.
 	for _, state := range steps {
 		states[state.(Location)] = StepRune
 	}
 
-	// Apply path.
 	for _, state := range path {
 		states[state.(Location)] = PathRune
 	}
@@ -209,8 +207,7 @@ func (m *Maze) DrawMaze(path, steps []interface{}) [][]string {
 		maze[i] = make([]string, len(m.maze[i]))
 		for j := 0; j < len(maze[i]); j++ {
 			state, ok := states[Location{i, j}]
-
-			if ok && m.maze[i][j] == SpaceRune {
+                        if ok && m.maze[i][j] == SpaceRune {
 				maze[i][j] = state
 			} else {
 				maze[i][j] = m.maze[i][j]
