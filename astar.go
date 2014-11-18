@@ -83,7 +83,7 @@ type Interface interface {
 	Cost(interface{}) float64
 
 	// Heuristic estimate of “how far to go?” between the given
-	// and the final state.  Smaller values mean closer.
+	// and the final state. Smaller values mean closer.
 	Estimate(interface{}) float64
 }
 
@@ -121,10 +121,10 @@ func (pq *states) Pop() interface{} {
 	return x
 }
 
-// Search returns two lists: 1) the shortest path to the final state,
-// and a 2) list of explored states. Every state in both lists is
-// one of those returned by Successors(). If the shortest path
-// cannot be found, ErrNotFound error is returned.
+// Search finds the p.Finish() state from a given p.Start() state by
+// invoking p.Successors() for some of the states. Search returns two slices:
+// 1) the shortest path to the final state, and a 2) sequence of explored states.
+// If the shortest path cannot be found, ErrNotFound error is returned.
 func Search(p Interface) ([]interface{}, []interface{}, error) {
 	// Priority queue of states on the frontier.
 	// Initialized with the start state.
