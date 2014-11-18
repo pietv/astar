@@ -87,7 +87,7 @@ func genEuclidEstimate(multiplier float64) func(interface{}, interface{}) float6
 			aJ = float64(neighbor.(Location).j)
 			bJ = float64(finish.(Location).j)
 		)
-		return math.Sqrt(math.Pow(aI-bI, 2) + math.Pow(aJ-bJ, 2)*multiplier)
+		return math.Sqrt(math.Pow(aI-bI, 2)+math.Pow(aJ-bJ, 2)) * multiplier
 	}
 }
 
