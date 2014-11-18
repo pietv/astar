@@ -8,6 +8,7 @@ import (
 	"io"
 	"math/rand"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
 	"time"
@@ -23,7 +24,7 @@ var (
 	// Command line flags.
 	euclidFlag    = flag.Bool("euclid", false, "use Euclid distance")
 	manhattanFlag = flag.Bool("manhattan", true, "use Manhattan distance")
-	estimFlag     = flag.Float64("estim", 1.5, "estimate multiplier")
+	estimateFlag  = flag.Float64("estimate", 1.5, "estimate multiplier")
 	costFlag      = flag.Float64("cost", 1.0, "cost multiplier")
 	demoFlag      = flag.Int("demo", 0, "run demo #")
 	randomFlag    = flag.Bool("random", false, "generate a random maze")
@@ -31,25 +32,29 @@ var (
 	helpFlag      = flag.Bool("help", false, "show help")
 )
 
+var program = filepath.Base(os.Args[0])
 var usage = `maze: demonstrate A* search algorithm traversing a maze.
 Usage: maze [FILE] [-demo N] [-random] [-size NxM] [-help]
-            [-euclid | -manhattan] [-mult MULTIPLIER]
+            [-euclid|-manhattan] [-cost MULTIPLIER] [-estimate MULTIPLIER]
 
 With no FILE, use a demo or a random maze.
 
 Flags:
- -demo N                 show a specific demo. #1..` + fmt.Sprintf("#%d", len(demos)) + `
+  -demo N                 show a specific demo, #1..` + fmt.Sprintf("#%d", len(demos)) + `.
+  -random                 show a random maze.
+  -size NxM               show a random maze of size NxM.
 
- -manhattan              use Manhattan distance as a heuristic estimate (default).
- -euclid                 use Euclidean distance.
- -estim MULTIPLIER       multiply estimate value by MULTIPLIER.
- -cost MULTIPLIER        multiply cost value by MULTIPLIER.
+  -manhattan              use Manhattan distance as a heuristic estimate (default).
+  -euclid                 use Euclidean distance.
+  -estimate MULTIPLIER    multiply estimate value by MULTIPLIER.
+  -cost MULTIPLIER        multiply cost value by MULTIPLIER.
 
+  -help                   show this help.
 
- -random                 show a random maze.
- -size NxM               show a random maze of size NxM.
-
- -help                   show this help.`
+Examples:
+  ` + program + ` -size 2x40                      -- long random maze
+  ` + program + ` -demo 2 -euclid -estimate 0.5   -- euclid distance with custom estimate
+  ` + program + ` -random -cost 0                 -- random maze with greedy traversal`
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -97,7 +102,7 @@ func main() {
 	if *demoFlag == 0 {
 		demo = rand.Intn(len(demos))
 
-		// Randomly choose between showing a demo or a generated maze.
+		// Choose randomly between showing a demo or a generated maze.
 		if rand.Intn(2) == 0 {
 			*randomFlag = true
 		}
@@ -133,10 +138,11 @@ func main() {
 
 	// By default use Manhattan distance.
 	if *euclidFlag {
-		estimateFunc = genEuclidEstimate(*estimFlag)
+		estimateFunc = genEuclidEstimate(*estimateFlag)
 	} else {
-		estimateFunc = genManhattanEstimate(*estimFlag)
+		estimateFunc = genManhattanEstimate(*estimateFlag)
 	}
+
 	// Don't use fancy colorings if output is redirected.
 	var medium string
 	if terminal.IsTerminal(1) {

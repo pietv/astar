@@ -30,7 +30,7 @@ func (pq *PriorityQueue) Pop() interface{} {
 
 }
 
-// NewRandomKruskal returns a random square Maze of rows by cols size.
+// NewRandomKruskal returns a random rectangular Maze of rows by cols size.
 func NewRandomKruskal(rows, cols int) *Maze {
 	pq := PriorityQueue{}
 	heap.Init(&pq)

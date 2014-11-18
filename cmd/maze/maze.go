@@ -25,6 +25,7 @@ var (
 var TerminalTmpl = `
 {{define "Terminal"}}
  {{.Title}}
+
 {{range .Maze}}  {{range .}}{{colorize .}}{{end}}{{println}}{{end}}
  {{colorize legend}}
  Run with “-help” for available options.
@@ -59,7 +60,7 @@ var (
 		},
 	}
 
-	estimateFunc = genEuclidEstimate(*estimFlag)
+	estimateFunc = genEuclidEstimate(*estimateFlag)
 )
 
 // genManhattanEstimate generates a Manhattan distance Estimate() function
