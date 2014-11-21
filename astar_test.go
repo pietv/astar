@@ -290,7 +290,7 @@ func TestBasic(t *testing.T) {
 		if actual, _, err := Search(test.g); stringize(actual) != test.out {
 			t.Errorf("%q: got %v, want %v", test.name, stringize(actual), test.out)
 			if err != nil {
-				t.Errorf("%q: failed with error %v", err)
+				t.Errorf("%q: failed with error %v", test.name, err)
 			}
 		}
 	}
@@ -305,7 +305,7 @@ func TestEstimate(t *testing.T) {
 		if path, actual, err := Search(test.g); stringize(actual) != test.out {
 			t.Errorf("%q: got %v, want %v, path %v", test.name, stringize(actual), test.out, path)
 			if err != nil {
-				t.Errorf("%q: failed with error %v", err)
+				t.Errorf("%q: failed with error %v", test.name, err)
 			}
 		}
 	}
