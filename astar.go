@@ -1,14 +1,14 @@
-// Package astar implements the A* (“A star”) search algorithm as described in
+// Package astar implements the A* (“A Star”) search algorithm as described in
 // the paper by Peter E. Hart et al, “A Formal Basis for the Heuristic Determination
 // of Minimum Cost Paths” http://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf
 //
 // The “open” and “closed” sets in this implementation are named “priority queue”
 // and “explored” respectively.
 //
-// Time complexity of the algorithm depends on the quality of heuristic function Estimate().
+// Time complexity of the algorithm depends on the quality of the heuristic function Estimate().
 //
 // If Estimate() is constant, the complexity is the same as for the uniform cost search (UCS)
-// algorithm – O(b^m), where b is the branching factor (how many Successors() on average)
+// algorithm – O(b^m), where b is the branching factor (how many successor states on average)
 // and m is the maximum depth of the decision tree.
 //
 // If Estimate() is optimal, the complexity is O(n).
@@ -122,7 +122,7 @@ func (pq *states) Pop() interface{} {
 }
 
 // Search finds the p.Finish() state from a given p.Start() state by
-// invoking p.Successors() for some of the states. Search returns two slices:
+// invoking p.Successors() and p.Move() at each step. Search returns two slices:
 // 1) the shortest path to the final state, and a 2) sequence of explored states.
 // If the shortest path cannot be found, ErrNotFound error is returned.
 func Search(p Interface) ([]interface{}, []interface{}, error) {

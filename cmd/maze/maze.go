@@ -64,7 +64,7 @@ var (
 )
 
 // genManhattanEstimate generates a Manhattan distance Estimate() function
-// with custom multiplier.
+// with a custom multiplier.
 func genManhattanEstimate(multiplier float64) func(interface{}, interface{}) float64 {
 	return func(finish, neighbor interface{}) float64 {
 		var (
@@ -77,7 +77,7 @@ func genManhattanEstimate(multiplier float64) func(interface{}, interface{}) flo
 	}
 }
 
-// genEuclidEstimate generates a Euclidean distance Estimate() function with
+// genEuclidEstimate generates a Euclidean distance Estimate() function with a
 // custom multiplier.
 func genEuclidEstimate(multiplier float64) func(interface{}, interface{}) float64 {
 	return func(finish, neighbor interface{}) float64 {
