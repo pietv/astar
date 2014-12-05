@@ -16,7 +16,7 @@ Overview
 A* Search is one of the intelligent exhaustive search algorithms which gets from
 Start to Finish by exploring successor states.
 
-![A* Steps](/screenshots/astar.png)
+![A* Steps](http://pietv.pub/resources/images/astar.png)
 It's intelligent because it uses a special guidance in selecting the states that
 are going to be explored next. The algorithm uses a minimum value of a sum of
 next successor cost and a heuristic estimate (distance, for example) of how close
@@ -42,13 +42,10 @@ and feeding harvested links as successors would do or, as another example,
 the provided [maze demo](/cmd/maze/maze.go) uses a rectangular matrix
 and uses surrounding cells that are not walls as successors.
 
-![Maze Demo](/screenshots/maze.png)
+![Maze Demo](http://pietv.pub/resources/images/maze.png)
 Install the demo:
 
 ```shell
+$ go get github.com/pietv/astar/cmd/maze
 $ go install github.com/pietv/astar/cmd/maze
 ```
-
-
-
-
