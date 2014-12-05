@@ -7,21 +7,21 @@ import (
 	"github.com/pietv/unionfind"
 )
 
-type Edge struct {
-	v1, v2 Location
+type edge struct {
+	v1, v2 location
 	w      int
 }
 
-type PriorityQueue []Edge
+type priorityQueue []edge
 
-func (pq PriorityQueue) Len() int           { return len(pq) }
-func (pq PriorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-func (pq PriorityQueue) Less(i, j int) bool { return pq[i].w < pq[j].w }
-func (pq *PriorityQueue) Push(x interface{}) {
-	edge := x.(Edge)
+func (pq priorityQueue) Len() int           { return len(pq) }
+func (pq priorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
+func (pq priorityQueue) Less(i, j int) bool { return pq[i].w < pq[j].w }
+func (pq *priorityQueue) Push(x interface{}) {
+	edge := x.(edge)
 	*pq = append(*pq, edge)
 }
-func (pq *PriorityQueue) Pop() interface{} {
+func (pq *priorityQueue) Pop() interface{} {
 	old := *pq
 	n := len(old)
 	edge := old[n-1]
@@ -30,9 +30,9 @@ func (pq *PriorityQueue) Pop() interface{} {
 
 }
 
-// NewRandomKruskal returns a random rectangular Maze of rows by cols size.
-func NewRandomKruskal(rows, cols int) *Maze {
-	pq := PriorityQueue{}
+// newRandomKruskal returns a random rectangular maze of rows by cols size.
+func newRandomKruskal(rows, cols int) *maze {
+	pq := priorityQueue{}
 	heap.Init(&pq)
 
 	// Kruskal's minimum spanning tree (MST) algorithm
@@ -56,16 +56,16 @@ func NewRandomKruskal(rows, cols int) *Maze {
 		for j := 0; j < cols; j++ {
 			// Horizontal edge.
 			if j < cols-1 {
-				heap.Push(&pq, Edge{Location{i, j}, Location{i, j + 1}, rand.Int()})
+				heap.Push(&pq, edge{location{i, j}, location{i, j + 1}, rand.Int()})
 			}
 
 			// Vertical edge.
 			if i < rows-1 {
-				heap.Push(&pq, Edge{Location{i, j}, Location{i + 1, j}, rand.Int()})
+				heap.Push(&pq, edge{location{i, j}, location{i + 1, j}, rand.Int()})
 			}
 
 			// Make a set for each vertex.
-			u.MakeSet(u, Location{i, j})
+			u.MakeSet(u, location{i, j})
 		}
 	}
 
@@ -77,15 +77,15 @@ func NewRandomKruskal(rows, cols int) *Maze {
 	//  * * * *
 	//  *******
 	//
-	maze := make([][]string, rows*2+1)
+	m := make([][]string, rows*2+1)
 	for i := 0; i <= rows*2; i++ {
-		maze[i] = make([]string, cols*2+1)
+		m[i] = make([]string, cols*2+1)
 		for j := 0; j <= cols*2; j++ {
 			// Gaps (spaces) in odd-numbered columns and rows (zero-based).
 			if i%2 == 1 && j%2 == 1 {
-				maze[i][j] = SpaceRune
+				m[i][j] = spaceRune
 			} else {
-				maze[i][j] = WallRune
+				m[i][j] = wallRune
 			}
 		}
 	}
@@ -97,29 +97,29 @@ func NewRandomKruskal(rows, cols int) *Maze {
 
 		// Pick an edge belonging to a random MST.
 		// Break a wall at that edge location.
-		e := heap.Pop(&pq).(Edge)
+		e := heap.Pop(&pq).(edge)
 		if !u.Connected(e.v1, e.v2) {
 			u.Union(e.v1, e.v2)
 
 			if e.v1.i == e.v2.i {
 				// Break vertical wall.
-				maze[e.v1.i*2+1][e.v1.j*2+2] = SpaceRune
+				m[e.v1.i*2+1][e.v1.j*2+2] = spaceRune
 			} else {
 				// Break horizontal wall.
-				maze[e.v1.i*2+2][e.v1.j*2+1] = SpaceRune
+				m[e.v1.i*2+2][e.v1.j*2+1] = spaceRune
 			}
 		}
 	}
 
 	// Fixed Start and Finish locations.
-	start := Location{rows*2 - 1, 1}
-	maze[start.i][start.j] = StartRune
+	start := location{rows*2 - 1, 1}
+	m[start.i][start.j] = startRune
 
-	finish := Location{1, cols*2 - 1}
-	maze[finish.i][finish.j] = FinishRune
+	finish := location{1, cols*2 - 1}
+	m[finish.i][finish.j] = finishRune
 
-	return &Maze{
-		maze:   maze,
+	return &maze{
+		maze:   m,
 		start:  start,
 		finish: finish,
 		curr:   start,

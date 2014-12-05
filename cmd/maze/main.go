@@ -96,7 +96,7 @@ func main() {
 	var (
 		demo  int
 		title string
-		maze  *Maze
+		maze  *maze
 	)
 
 	// Random or specified demo screen.
@@ -117,7 +117,7 @@ func main() {
 
 	if flag.NArg() > 0 {
 		// From FILE.
-		maze = New(readFile(flag.Args()[0]))
+		maze = new(readFile(flag.Args()[0]))
 		title = "Charming maze"
 	} else if *randomFlag || *sizeFlag != defaultSize {
 		// Random.
@@ -129,11 +129,11 @@ func main() {
 			os.Exit(1)
 		}
 
-		maze = NewRandomKruskal(n, m)
+		maze = newRandomKruskal(n, m)
 		title = "Randomly generated maze"
 	} else {
 		// Demo.
-		maze = New(demos[demo].maze)
+		maze = new(demos[demo].maze)
 		title = fmt.Sprintf("Demo #%d. %s", demo+1, demos[demo].title)
 	}
 
@@ -157,11 +157,11 @@ func main() {
 		title = "Yikes! Could not find the path for this one"
 	}
 
-	template.Must(template.New("Maze").Funcs(helpers).Parse(TerminalTmpl)).ExecuteTemplate(os.Stdout, medium, struct {
+	template.Must(template.New("Maze").Funcs(helpers).Parse(terminalTmpl)).ExecuteTemplate(os.Stdout, medium, struct {
 		Title string
 		Maze  [][]string
 	}{
 		Title: title,
-		Maze:  maze.DrawMaze(path, steps),
+		Maze:  maze.drawMaze(path, steps),
 	})
 }
