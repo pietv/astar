@@ -32,7 +32,7 @@ like other well-known algorithms:
 Cost    |Estimate  |Behavior
 --------|----------|-----------------------------------------------
 const   |const     |[Breadth First Search](http://en.wikipedia.org/wiki/Breadth-first_search)
-variable|const     |[Dijkstra's Shortest Path] (http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) / [Uniform Cost Search](http://en.wikipedia.org/wiki/Uniform-cost_search)
+variable|const     |[Dijkstra's Shortest Path] (http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) / [Uniform-Cost Search](http://en.wikipedia.org/wiki/Uniform-cost_search)
 const   |variable  |[Greedy Best First Search](http://en.wikipedia.org/wiki/Best-first_search)
 variable|variable  |[A*](http://en.wikipedia.org/wiki/A*_search_algorithm)
 
