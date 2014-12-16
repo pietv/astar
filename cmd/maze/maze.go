@@ -161,7 +161,7 @@ func tput(command string, params ...interface{}) string {
 	return string(out)
 }
 
-// new initialize a maze with a given slice of strings.
+// new initializes a maze with a given slice of strings.
 func new(lines []string) *maze {
 	m := make([][]string, len(lines))
 
