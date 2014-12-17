@@ -3,7 +3,7 @@
 // of Minimum Cost Paths” http://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf
 //
 // The “open” and “closed” sets in this implementation are named “priority queue”
-// and “explored” respectively.
+// and “explored set” respectively.
 //
 // Time complexity of the algorithm depends on the quality of the heuristic function Estimate().
 //
