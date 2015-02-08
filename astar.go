@@ -97,12 +97,12 @@ type states []*state
 
 func (pq states) Len() int           { return len(pq) }
 func (pq states) Empty() bool        { return len(pq) == 0 }
-func (pq states) Less(n, j int) bool { return pq[n].cost+pq[n].estimate < pq[j].cost+pq[j].estimate }
-func (pq states) Swap(n, j int) {
-	pq[n], pq[j] = pq[j], pq[n]
+func (pq states) Less(i, j int) bool { return pq[i].cost+pq[i].estimate < pq[j].cost+pq[j].estimate }
+func (pq states) Swap(i, j int) {
+	pq[i], pq[j] = pq[j], pq[i]
 
 	// Index is maintained for heap.Fix().
-	pq[n].index = n
+	pq[i].index = i
 	pq[j].index = j
 }
 
