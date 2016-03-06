@@ -48,5 +48,4 @@ Install the demo:
 
 ```shell
 $ go get github.com/pietv/astar/cmd/maze
-$ go install github.com/pietv/astar/cmd/maze
 ```
