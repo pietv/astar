@@ -19,9 +19,9 @@ Start to Finish by exploring successor states.
 ![A* Steps](http://pietv.pub/resources/images/astar.png)
 It's intelligent because it uses a special guidance in selecting the states that
 are going to be explored next. The algorithm uses a minimum value of a sum of
-next successor cost and a heuristic estimate (distance, for example) of how close
-that next successor to Finish. These values are named Cost and Estimate 
-in this implementation.
+the next successor cost and the heuristic estimate (distance, for example) of 
+how close that next successor is to Finish. These values are named Cost 
+and Estimate in this implementation.
 
 Without any guidance (that is when both Cost and Estimate values are constant),
 it explores all successor states, making it essentially the Breadth First Search
@@ -48,5 +48,4 @@ Install the demo:
 
 ```shell
 $ go get github.com/pietv/astar/cmd/maze
-$ go install github.com/pietv/astar/cmd/maze
 ```
