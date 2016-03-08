@@ -121,9 +121,9 @@ func (pq *states) Pop() interface{} {
 	return x
 }
 
-// Search finds the p.Finish() state from a given p.Start() state by
+// Search finds the p.Finish() state from the given p.Start() state by
 // invoking p.Successors() and p.Move() at each step. Search returns two slices:
-// 1) the shortest path to the final state, and a 2) sequence of explored states.
+// 1) the shortest path to the final state, and 2) a sequence of explored states.
 // If the shortest path cannot be found, ErrNotFound error is returned.
 func Search(p Interface) ([]interface{}, []interface{}, error) {
 	// Priority queue of states on the frontier.
