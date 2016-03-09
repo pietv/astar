@@ -64,8 +64,9 @@ import (
 // ErrNotFound means that the final state cannot be reached from the given start state.
 var ErrNotFound = errors.New("final state is not reachable")
 
-// Any type is suitable for A* search as long as it can change its current state and tell
-// legal moves from it.  Knowing costs and estimates helps, but not necessary.
+// Interface describes a type suitable for A* search. Any type can do as long as
+// it can change its current state and tell legal moves from it.
+// Knowing costs and estimates helps, but not necessary.
 type Interface interface {
 	// Initial state.
 	Start() interface{}
